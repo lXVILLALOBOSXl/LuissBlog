@@ -39,11 +39,15 @@
 
         <!-- Comments Area -->
         <!-- Load the CKEditor -->
-        {{ ckeditor.load() }}
-        <!-- Configure it with the name of the form field from CommentForm -->
-        {{ ckeditor.config(name='comment_text') }}
-        <!-- Create the wtf quick form from CommentForm -->
-        {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        {% if logged_in %}
+          {{ ckeditor.load() }}
+          <!-- Configure it with the name of the form field from CommentForm -->
+          {{ ckeditor.config(name='comment_text') }}
+          <!-- Create the wtf quick form from CommentForm -->
+          {{ render_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+        {% else %}
+          <p>Please <a href="{{url_for('login')}}">login</a> to leave a comment.</p>
+        {% endif %}
         <div class="comment">
           <ul class="commentList">
             <!-- Show all comments -->
